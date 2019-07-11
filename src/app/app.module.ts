@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { appReducer } from './reducers/app.reducer';
 import { UserEffects } from './effects/app.effects';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { EffectsModule } from '@ngrx/effects';
   imports: [
     BrowserModule,
     StoreModule.forRoot({users: appReducer}),
-    EffectsModule.forRoot([UserEffects ])
+    EffectsModule.forRoot([UserEffects ]),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [
     AppService
