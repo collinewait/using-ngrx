@@ -1,7 +1,10 @@
 import { AppService } from './app.service';
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, from } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IUser } from './app.model';
+import { AppState } from './models/app-state';
+import { Store } from '@ngrx/store';
+import * as  appActions from './actions/app.actions';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +12,9 @@ import { IUser } from './app.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private appService: AppService) {}
+  constructor(private store: Store<AppState>) {
+    this.users$ = this.store.select(state => state.users);
+  }
   title = 'using-ngrx';
   users$: Observable<IUser[]>;
 
@@ -18,6 +23,6 @@ export class AppComponent implements OnInit {
   }
 
   getUsers() {
-    this.users$ = this.appService.getUsers();
+    this.store.dispatch(new appActions.LoadUsersAction());
   }
 }
